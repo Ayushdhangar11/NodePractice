@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        h3 {
+            color: #4CAF50;
+        }
+
+        form {
+            margin-top: 15px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin-left: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            border: 2px solid #333;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #333;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td:nth-child(2) {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h3>URL Shortener</h3>
+
+    <form action="/url" method="POST">
+        <input type="text" name="url" placeholder="Enter URL to shorten" required>
+        <button type="submit">Shorten</button>
+    </form>
+
+    <br><br>
+
+    <% if(locals.id){ %>
+        <p><b>Shortened URL ID:</b> <%= locals.id %></p>
+        <p><b>URL Generated:</b> http://localhost:8001/<%= id %></p>
+    <% } %>
+
+    <br>
+
+    <% if (locals.urls) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Original URL</th>
+                    <th>Created At</th>
+                    <th>Visit Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% locals.urls.forEach(function(url, index) { %>
+                    <tr>
+                        <td><%= url.shortId %></td>
+                        <td><%= url.redirectURL %></td>
+                        <td><%= url.createdAt %></td>
+                        <td><%= url.visitHistory.length %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+
+</body>
+</html>
